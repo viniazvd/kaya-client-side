@@ -3,6 +3,11 @@
 import Vue from 'vue'
 import Root from './Root'
 import router from './router'
+import store from './store'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+
+Vue.use(Vuetify)
 
 Vue.config.productionTip = false
 
@@ -10,6 +15,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#root',
   router,
+  store,
   template: '<Root/>',
   components: { Root }
 })
