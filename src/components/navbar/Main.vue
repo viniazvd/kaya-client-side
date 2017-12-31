@@ -1,11 +1,16 @@
 <template>
   <div>
-    navbar
+    OPA
   </div>
 </template>
 
 <script>
 export default {
-  name: 'footer'
+  name: 'navbar',
+
+  data () {
+    return {
+    }
+  }
 }
 </script>

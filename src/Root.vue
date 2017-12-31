@@ -1,12 +1,17 @@
 <template>
-  <div id="root">
-    OPA
-    <router-view/>
+  <!-- Don't drop "q-root" class -->
+  <div id="q-root">
+    <Menu></Menu>
+    <router-view />
   </div>
 </template>
 
 <script>
+import Menu from './components/navbar/Main'
+
 export default {
-  name: 'root'
+  name: 'root',
+
+  components: { Menu }
 }
 </script>

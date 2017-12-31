@@ -5,14 +5,13 @@ import routes from './routes'
 
 Vue.use(VueRouter)
 
-// const load = (component) => {
-//   return () => System.import(`components/${component}.vue`)
-// }
+// const load = (component) => () => import(`@/${component}.vue`)
 
 const router = new VueRouter({
   routes,
   linkActiveClass: 'active',
-  mode: 'history'
+  mode: 'history',
+  scrollBehavior: () => ({ y: 0 })
 })
 
 // router.beforeEach(beforeEach)
