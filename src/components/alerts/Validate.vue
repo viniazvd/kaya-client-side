@@ -13,7 +13,7 @@
 
 <script>
 import QAlert from 'quasar'
- 
+
 export default {
   name: 'alert-validate',
   props: ['isActived'],
