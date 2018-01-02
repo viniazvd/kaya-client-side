@@ -27,9 +27,16 @@
                 />
               </q-field>
 
-              <q-stepper-navigation class="flex justify-end">
+              <q-stepper-navigation class="flex justify-start">
+                <a href="javascript:void(0)">Esqueceu seu e-mail?</a>
+              </q-stepper-navigation>
+
+              <q-stepper-navigation class="flex justify-between">
+                <a href="javascript:void(0)">Criar conta</a>
                 <q-btn color="primary" @click="next">PRÓXIMA</q-btn>
               </q-stepper-navigation>
+
+              <q-btn class="full-width" color="grey" @click="loginInvited">Entrar como convidado</q-btn>
             </q-step>
 
             <q-step name="password" title="Password" icon="lock" active-icon="lock">
@@ -123,6 +130,10 @@ export default {
     password: { required }
   },
   methods: {
+    loginInvited () {
+      this.$router.push('/invited')
+    },
+
     next () {
       this.$v.$touch()
       const self = this
