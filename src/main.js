@@ -14,6 +14,7 @@ import Vue from 'vue'
 import Quasar from 'quasar'
 import Vuelidate from 'vuelidate'
 import router from './router'
+import store from './store'
 
 Vue.config.productionTip = false
 Vue.use(Quasar) // Install Quasar Framework
@@ -32,6 +33,7 @@ Quasar.start(() => {
   new Vue({
     el: '#q-root',
     router,
+    store,
     render: h => h(require('./Root').default)
   })
 })
