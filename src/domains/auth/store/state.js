@@ -1,4 +1,7 @@
+const user = localStorage.getItem('user')
+const token = localStorage.getItem('token')
+
 export default {
-  user: {},
-  token: null
+  user: user || {},
+  token: token || ''
 }
