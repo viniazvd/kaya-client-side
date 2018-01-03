@@ -22,8 +22,9 @@
                 <q-input
                   type="text"
                   float-label="E-mail"
-                  v-model="email"
+                  v-model="user.email"
                   clearable
+                  @keyup.enter="next"
                 />
               </q-field>
 
@@ -33,10 +34,10 @@
 
               <q-stepper-navigation class="flex justify-between">
                 <a href="javascript:void(0)">Criar conta</a>
-                <q-btn color="primary" @click="next">PRÓXIMA</q-btn>
+                <q-btn color="primary" icon="arrow_forward" @click="next">PRÓXIMA</q-btn>
               </q-stepper-navigation>
 
-              <q-btn class="full-width" color="grey" @click="loginInvited">Entrar como convidado</q-btn>
+              <q-btn class="full-width" icon="no_encryption" color="grey" @click="loginInvited">Entrar como convidado</q-btn>
             </q-step>
 
             <q-step name="password" title="Password" icon="lock" active-icon="lock">
@@ -44,16 +45,19 @@
                 <q-input
                   type="password"
                   float-label="Password"
-                  v-model="password"
+                  v-model="user.password"
                   clearable
-                  @blur="$v.password.$touch"
-                  @keyup.enter="submit"
+                  @keyup.enter="attemptLogin"
                 />
               </q-field>
 
+              <q-stepper-navigation class="flex justify-start">
+                <a href="javascript:void(0)">Esqueceu a senha?</a>
+              </q-stepper-navigation>
+
               <q-stepper-navigation class="flex justify-end">
-                <q-btn color="primary" flat @click="$refs.stepper.previous()">Voltar</q-btn>
-                <q-btn color="primary" @click="submit">Entrar</q-btn>
+                <q-btn color="primary" icon="arrow_back" flat @click="$refs.stepper.previous()">Voltar</q-btn>
+                <q-btn color="primary" icon="lock_open" @click="attemptLogin">Entrar</q-btn>
               </q-stepper-navigation>
             </q-step>
 
@@ -79,6 +83,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import { required, email } from 'vuelidate/lib/validators'
 import {
   QAlert,
@@ -117,19 +122,25 @@ export default {
 
   data () {
     return {
-      email: '',
-      password: '',
+      user: {
+        email: '',
+        password: ''
+      },
+      message: '',
       step: 'first',
-      options: ['alt'],
       showAlert: false,
       alertMessage: ''
     }
   },
   validations: {
-    email: { required, email },
-    password: { required }
+    user: {
+      email: { required, email },
+      password: { required }
+    }
   },
   methods: {
+    ...mapActions(['doLogin']),
+
     loginInvited () {
       this.$router.push('/invited')
     },
@@ -138,7 +149,7 @@ export default {
       this.$v.$touch()
       const self = this
 
-      if (this.$v.email.$error) {
+      if (this.$v.user.email.$error) {
         this.alertMessage = 'E-mail inválido'
         this.show()
         setTimeout(() => self.hide(), 3000)
@@ -148,17 +159,25 @@ export default {
       this.$refs.stepper.next()
     },
 
-    submit () {
+    attemptLogin () {
       const self = this
 
-      if (this.$v.password.$error) {
+      if (this.$v.user.password.$error) {
         this.alertMessage = 'Senha inválida'
         this.show()
         setTimeout(() => self.hide(), 3000)
         return false
       }
 
-      this.$router.push('/home')
+      const user = this.user
+      // this.$loading.show()
+      this.doLogin({ ...user }).then(() => {
+        this.$router.push('/home')
+      }).catch(() => {
+        // this.$loading.hide()
+        this.message = 'E-mail ou senha não conferem, tente novamente'
+      })
+      // this.$loading.hide()
     },
 
     show () {
@@ -174,7 +193,7 @@ export default {
 
 <style scoped>
 .link-site {
-  padding-top: 50px;
+  padding-top: 30px;
   text-decoration: underline;
 }
 
@@ -189,7 +208,7 @@ export default {
 .card-wrapper {
   width: 100%;
   height: 100%;
-  padding-top: 50px;
+  padding-top: 0px;
   overflow: auto;
 }
 
