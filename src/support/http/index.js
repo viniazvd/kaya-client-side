@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { api } from '@/support/enviroment/baseUrl'
+// import { api } from '../enviroment/baseUrl'
 
 export const http = axios.create({
-  baseURL: api
+  baseURL: 'http://localhost:3000/api/'
 })
