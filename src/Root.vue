@@ -1,17 +1,29 @@
 <template>
-  <!-- Don't drop "q-root" class -->
   <div id="q-root">
-    <Menu></Menu>
+    <div v-if="this.isLogged()">
+      <Navbar />
+    </div>
+    
+    <div v-else>
+      <Auth />
+    </div>
+  
     <router-view />
   </div>
 </template>
 
 <script>
-import Menu from './components/navbar/Main'
+import { mapGetters } from 'vuex'
+import Auth from './app/auth/components/Main'
+import Navbar from './components/navbar/Main'
 
 export default {
   name: 'root',
 
-  components: { Menu }
+  components: { Auth, Navbar },
+
+  methods: {
+    ...mapGetters(['isLogged'])
+  }
 }
 </script>
