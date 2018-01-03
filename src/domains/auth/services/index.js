@@ -1,13 +1,16 @@
-// import http from '../../http'
+import { http } from '../../../support/http'
 
-// export const autenticacao = (matricula, senha) => {
-// 	return http.post('http://localhost:3000/api/authenticate', { matricula, senha })
+export const postLogin = (email, password) => {
+  return http.post('auth/signin', { email, password })
+    .then(response => response.data)
+}
+
+// export const getVerifyToken = (token) => {
+//   return http.post('/auth/verify', { token })
+//     .then(response => response.data)
 // }
 
-// export const postEmail = (matricula) => {
-// 	return http.post('http://localhost:3000/api/email-forget-password', { matricula })
-// }
-
-// export const postPassword = (matricula, senha, novasenha) => {
-// 	return http.post('http://localhost:3000/api/change-password', { matricula, senha, novasenha })
+// export const getRefreshToken = (token) => {
+//   return http.post('/auth/refresh', { token })
+//     .then(response => response.data)
 // }
