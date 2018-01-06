@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex justify-center link-site">
+    <div class="flex justify-center link-site" v-once>
       <a href="https://espacokaya.com.br/">
         <h5>Visite o nosso site</h5>
       </a>
@@ -14,9 +14,8 @@
 
         <q-card-separator />
 
-        <q-card-main class="form">
-
-          <q-stepper flat ref="stepper" v-model="step" color="primary">
+        <q-card-main>
+          <q-stepper flat ref="stepperLogin" v-model="stepLogin" color="primary">
             <q-step default name="email" title="E-mail" active-icon="mail">
               <q-field icon="mail" helper="exemplo: meuemail@gmail.com">
                 <q-input
@@ -24,7 +23,7 @@
                   float-label="E-mail"
                   v-model="user.email"
                   clearable
-                  @keyup.enter="next"
+                  @keyup.enter="goToPassword"
                 />
               </q-field>
 
@@ -34,17 +33,17 @@
 
               <q-stepper-navigation class="flex justify-between">
                 <a href="javascript:void(0)">Criar conta</a>
-                <q-btn color="primary" icon="arrow_forward" @click="next">PRÓXIMA</q-btn>
+                <q-btn color="primary" icon="arrow_forward" @click="goToPassword">PRÓXIMA</q-btn>
               </q-stepper-navigation>
 
               <q-btn class="full-width" icon="no_encryption" color="grey" @click="loginInvited">Entrar como convidado</q-btn>
             </q-step>
 
-            <q-step name="password" title="Password" icon="lock" active-icon="lock">
+            <q-step name="password" title="Senha" icon="lock" active-icon="lock">
               <q-field icon="lock">
                 <q-input
                   type="password"
-                  float-label="Password"
+                  float-label="Senha"
                   v-model="user.password"
                   clearable
                   @keyup.enter="attemptLogin"
@@ -52,17 +51,16 @@
               </q-field>
 
               <q-stepper-navigation class="flex justify-start">
-                <a href="javascript:void(0)">Esqueceu a senha?</a>
+                <a href="javascript:void(0)" @click="$refs.basicModal.open()">Esqueceu a senha?</a>
               </q-stepper-navigation>
 
               <q-stepper-navigation class="flex justify-end">
-                <q-btn color="primary" icon="arrow_back" flat @click="$refs.stepper.previous()">Voltar</q-btn>
+                <q-btn color="primary" icon="arrow_back" flat @click="$refs.stepperLogin.previous()">Voltar</q-btn>
                 <q-btn color="primary" icon="lock_open" @click="attemptLogin">Entrar</q-btn>
               </q-stepper-navigation>
             </q-step>
 
           </q-stepper>
-
         </q-card-main>
 
       </q-card>
@@ -74,10 +72,59 @@
       icon="warning"
       position="bottom"
       dismissible
-      v-model="showAlert"
-    >
+      v-model="showAlert">
       {{ alertMessage }}
     </q-alert>
+
+    <q-modal ref="basicModal" :content-css="modalStyle">
+      <q-stepper flat ref="stepForgotPassword" v-model="stepForgotPassword" color="primary">
+        <q-step default name="email" title="Reenvio" active-icon="mail">
+          <div class="modal-title">
+            Digite um e-mail que você possa verificar agora
+          </div>
+          
+          <q-field icon="email" helper="exemplo: meuemail@gmail.com">
+            <q-input 
+              type="text" 
+              v-model="emailToResend"
+              float-label="E-mail"
+              clearable
+              @keyup.enter="checkEmail">
+            </q-input>
+          </q-field>
+
+          <q-stepper-navigation class="padding-top justify-between">
+            <q-btn color="primary" icon="arrow_back" flat @click="$refs.basicModal.close()">Voltar</q-btn>
+            <q-btn color="primary" icon="arrow_forward" @click="checkEmail">PRÓXIMA</q-btn>
+          </q-stepper-navigation>
+        </q-step>
+
+        <q-step name="password" title="Mudar senha" icon="lock" active-icon="lock">
+          <q-field icon="vpn_key">
+            <q-input
+              type="password"
+              float-label="Token recebido pelo e-mail"
+              v-model="user.password"
+              clearable
+              @keyup.enter="changePassword"
+            />
+          </q-field>
+          <q-field icon="lock">
+            <q-input
+              type="password"
+              float-label="Escolha uma nova senha"
+              v-model="user.password"
+              clearable
+              @keyup.enter="changePassword"
+            />
+          </q-field>
+          <div class="padding-top flex justify-between">
+            <q-btn color="primary" icon="arrow_back" flat @click="$refs.stepForgotPassword.previous()">Voltar</q-btn>
+            <q-btn color="primary" icon="mode_edit" @click="changePassword">Mudar senha</q-btn>
+          </div>
+        </q-step>
+      </q-stepper>
+    </q-modal>
 
   </div>
 </template>
@@ -98,7 +145,8 @@ import {
   QStep,
   QStepperNavigation,
   QOptionGroup,
-  QInnerLoading
+  QInnerLoading,
+  QModal
 } from 'quasar'
 
 export default {
@@ -117,35 +165,46 @@ export default {
     QStep,
     QStepperNavigation,
     QOptionGroup,
-    QInnerLoading
+    QInnerLoading,
+    QModal
   },
 
   data () {
     return {
       user: {
-        email: '',
+        email: 'viniazvd@gmail.com',
         password: ''
       },
-      message: '',
-      step: 'first',
+      emailToResend: '',
+      stepLogin: 'first',
+      stepForgotPassword: 'first',
       showAlert: false,
-      alertMessage: ''
+      alertMessage: '',
+      modalStyle: {
+        padding: '20px',
+        marginRight: '15px',
+        width: '400px',
+        height: '400px'
+      }
     }
   },
+
   validations: {
     user: {
       email: { required, email },
       password: { required }
-    }
+    },
+    emailToResend: { required, email }
   },
+
   methods: {
-    ...mapActions(['doLogin']),
+    ...mapActions(['doLogin', 'doVerifyEmail']),
 
     loginInvited () {
       this.$router.push('/invited')
     },
 
-    next () {
+    goToPassword () {
       this.$v.$touch()
       const self = this
 
@@ -156,7 +215,7 @@ export default {
         return false
       }
 
-      this.$refs.stepper.next()
+      this.$refs.stepperLogin.next()
     },
 
     attemptLogin () {
@@ -170,14 +229,40 @@ export default {
       }
 
       const user = this.user
-      // this.$loading.show()
-      this.doLogin({ ...user }).then(() => {
-        this.$router.push('/home')
-      }).catch(() => {
-        // this.$loading.hide()
-        this.message = 'E-mail ou senha não conferem, tente novamente'
-      })
-      // this.$loading.hide()
+      this.doLogin({ ...user })
+        .then(() => {
+          this.$router.push('/home')
+        })
+        .catch(() => {
+          this.alertMessage = 'E-mail ou senha não conferem, tente novamente'
+          this.show()
+          setTimeout(() => self.hide(), 3000)
+          return false
+        })
+    },
+
+    checkEmail () {
+      const self = this
+
+      if (this.$v.emailToResend.$error) {
+        this.alertMessage = 'E-mail inválido'
+        this.show()
+        setTimeout(() => self.hide(), 3000)
+        return false
+      }
+
+      this.doVerifyEmail(this.emailToResend)
+        .then(() => this.$refs.stepForgotPassword.next())
+        .catch(() => {
+          this.alertMessage = 'E-mail inexistente'
+          this.show()
+          setTimeout(() => self.hide(), 3000)
+          return false
+        })
+    },
+
+    changePassword () {
+
     },
 
     show () {
@@ -215,5 +300,24 @@ export default {
 .card-form {
   width: 400px;
   background: #ffffff;
+}
+
+.modal-title {
+  margin-top: 55px;
+  margin-bottom: 30px;
+  margin-left: 15px;
+  font-size: 13px;
+  text-align: center;
+  font-weight: bold;
+  /* color: #013ADF; */
+}
+
+.btn-modal {
+  width: 100%;
+  margin-top: 25px;
+}
+
+.padding-top {
+  margin-top: 45px;
 }
 </style>
