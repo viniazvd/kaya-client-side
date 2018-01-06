@@ -9,3 +9,7 @@ export const getEmailToken = email => {
   return http.post('auth/forgot-password', { email })
   // .then(response => response.data.result.msg)
 }
+
+export const postNewPassword = ({ token, email, newPassword }) => {
+  return http.post('auth/change-password', { token, email, newPassword })
+}
