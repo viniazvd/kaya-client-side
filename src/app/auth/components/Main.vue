@@ -17,15 +17,7 @@
         <q-card-main>
           <q-stepper flat ref="stepperLogin" v-model="stepLogin" color="primary">
             <q-step default name="email" title="E-mail" active-icon="mail">
-              <q-field icon="mail" helper="exemplo: meuemail@gmail.com">
-                <q-input
-                  type="text"
-                  float-label="E-mail"
-                  v-model="user.email"
-                  clearable
-                  @keyup.enter="goToPassword"
-                />
-              </q-field>
+              <InputEmail :email.sync="user.email" @keyUp="goToPassword"></InputEmail>
 
               <q-stepper-navigation class="flex justify-start">
                 <a href="javascript:void(0)">Esqueceu seu e-mail?</a>
@@ -40,15 +32,7 @@
             </q-step>
 
             <q-step name="password" title="Senha" icon="lock" active-icon="lock">
-              <q-field icon="lock">
-                <q-input
-                  type="password"
-                  float-label="Senha"
-                  v-model="user.password"
-                  clearable
-                  @keyup.enter="attemptLogin"
-                />
-              </q-field>
+              <InputPassword :password.sync="user.password" @keyUp="attemptLogin"></InputPassword>
 
               <q-stepper-navigation class="flex justify-start">
                 <a href="javascript:void(0)" @click="$refs.basicModal.open()">Esqueceu a senha?</a>
@@ -140,6 +124,8 @@
 <script>
 import { mapActions } from 'vuex'
 import { required, email } from 'vuelidate/lib/validators'
+import InputEmail from './inputs/InputEmail'
+import InputPassword from './inputs/InputPassword'
 import {
   QAlert,
   QBtn,
@@ -162,6 +148,8 @@ export default {
   name: 'auth',
 
   components: {
+    InputEmail,
+    InputPassword,
     QAlert,
     QBtn,
     QInput,
@@ -226,7 +214,7 @@ export default {
       if (this.$v.user.email.$error) {
         this.alertMessage = 'E-mail inválido'
         this.activateAlert()
-        setTimeout(() => self.hideAlert(), 3000)
+        setTimeout(() => self.hideAlert(), 2000)
         return false
       }
 
@@ -238,7 +226,7 @@ export default {
       if (this.$v.user.password.$error) {
         this.alertMessage = 'Senha inválida'
         this.activateAlert()
-        setTimeout(() => self.hideAlert(), 3000)
+        setTimeout(() => self.hideAlert(), 2000)
         return false
       }
 
@@ -250,12 +238,12 @@ export default {
           .catch(() => {
             this.alertMessage = 'E-mail ou senha não conferem, tente novamente'
             this.activateAlert()
-            setTimeout(() => self.hideAlert(), 3000)
+            setTimeout(() => self.hideAlert(), 2000)
             return false
           })
 
         this.loading = false
-      }, 3000)
+      }, 2000)
     },
 
     checkEmail () {
@@ -264,7 +252,7 @@ export default {
       if (this.$v.emailToResend.$error) {
         this.alertMessage = 'E-mail inválido'
         this.activateAlert()
-        setTimeout(() => self.hideAlert(), 3000)
+        setTimeout(() => self.hideAlert(), 2000)
         return false
       }
 
@@ -273,7 +261,7 @@ export default {
         .catch(() => {
           this.alertMessage = 'E-mail inexistente'
           this.activateAlert()
-          setTimeout(() => self.hideAlert(), 3000)
+          setTimeout(() => self.hideAlert(), 2000)
           return false
         })
     },
@@ -284,14 +272,14 @@ export default {
       if (this.$v.token.$error) {
         this.alertMessage = 'Token é obrigatório'
         this.activateAlert()
-        setTimeout(() => self.hideAlert(), 3000)
+        setTimeout(() => self.hideAlert(), 2000)
         return false
       }
 
       if (this.$v.newPassword.$error) {
         this.alertMessage = 'Senha é obrigatória'
         this.activateAlert()
-        setTimeout(() => self.hideAlert(), 3000)
+        setTimeout(() => self.hideAlert(), 2000)
         return false
       }
 
@@ -307,12 +295,12 @@ export default {
           .catch(() => {
             this.alertMessage = 'Um erro aconteceu. Tente novamente.'
             this.activateAlert()
-            setTimeout(() => self.hideAlert(), 3000)
+            setTimeout(() => self.hideAlert(), 2000)
             return false
           })
 
         this.loading = false
-      }, 3000)
+      }, 2000)
     },
 
     activateAlert () {
