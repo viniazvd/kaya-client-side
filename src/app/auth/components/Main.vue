@@ -102,9 +102,9 @@
         <q-step name="password" title="Mudar senha" icon="lock" active-icon="lock">
           <q-field icon="vpn_key">
             <q-input
-              type="password"
+              type="text"
               float-label="Token recebido pelo e-mail"
-              v-model="user.password"
+              v-model="token"
               clearable
               @keyup.enter="changePassword"
             />
@@ -113,7 +113,7 @@
             <q-input
               type="password"
               float-label="Escolha uma nova senha"
-              v-model="user.password"
+              v-model="newPassword"
               clearable
               @keyup.enter="changePassword"
             />
@@ -172,10 +172,12 @@ export default {
   data () {
     return {
       user: {
-        email: 'viniazvd@gmail.com',
+        email: '',
         password: ''
       },
       emailToResend: '',
+      token: '',
+      newPassword: '',
       stepLogin: 'first',
       stepForgotPassword: 'first',
       showAlert: false,
@@ -194,11 +196,13 @@ export default {
       email: { required, email },
       password: { required }
     },
-    emailToResend: { required, email }
+    emailToResend: { required, email },
+    token: { required },
+    newPassword: { required }
   },
 
   methods: {
-    ...mapActions(['doLogin', 'doVerifyEmail']),
+    ...mapActions(['doLogin', 'doVerifyEmail', 'doChangePassword']),
 
     loginInvited () {
       this.$router.push('/invited')
@@ -262,7 +266,36 @@ export default {
     },
 
     changePassword () {
+      const self = this
 
+      if (this.$v.token.$error) {
+        this.alertMessage = 'Token é obrigatório'
+        this.show()
+        setTimeout(() => self.hide(), 3000)
+        return false
+      }
+
+      if (this.$v.newPassword.$error) {
+        this.alertMessage = 'Senha é obrigatória'
+        this.show()
+        setTimeout(() => self.hide(), 3000)
+        return false
+      }
+
+      const dataForChanging = {
+        token: this.token,
+        email: this.user.email,
+        newPassword: this.newPassword
+      }
+
+      this.doChangePassword({ ...dataForChanging })
+        .then(() => this.$refs.basicModal.close())
+        .catch(() => {
+          this.alertMessage = 'Um erro aconteceu. Tente novamente.'
+          this.show()
+          setTimeout(() => self.hide(), 3000)
+          return false
+        })
     },
 
     show () {
