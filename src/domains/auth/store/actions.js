@@ -1,4 +1,4 @@
-import { postLogin } from '../services'
+import { postLogin, getEmailToken } from '../services'
 import * as types from './mutations-types'
 
 export const doLogin = ({ commit }, user) => {
@@ -17,3 +17,8 @@ export const doLogin = ({ commit }, user) => {
 //   commit(types.SET_USER, {})
 //   commit(types.SET_TOKEN, '')
 // }
+
+export const doVerifyEmail = ({ commit }, email) => {
+  return getEmailToken(email)
+    .catch(error => Promise.reject(error))
+}
