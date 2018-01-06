@@ -124,7 +124,15 @@
           </div>
         </q-step>
       </q-stepper>
+
+      <q-inner-loading :visible="loading">
+        <q-spinner-gears size="300px" color="primary" />
+      </q-inner-loading>
     </q-modal>
+
+    <q-inner-loading :visible="loading">
+      <q-spinner-gears size="300px" color="primary" />
+    </q-inner-loading>
 
   </div>
 </template>
@@ -146,6 +154,7 @@ import {
   QStepperNavigation,
   QOptionGroup,
   QInnerLoading,
+  QSpinnerGears,
   QModal
 } from 'quasar'
 
@@ -166,6 +175,7 @@ export default {
     QStepperNavigation,
     QOptionGroup,
     QInnerLoading,
+    QSpinnerGears,
     QModal
   },
 
@@ -187,7 +197,8 @@ export default {
         marginRight: '15px',
         width: '400px',
         height: '400px'
-      }
+      },
+      loading: false
     }
   },
 
@@ -214,8 +225,8 @@ export default {
 
       if (this.$v.user.email.$error) {
         this.alertMessage = 'E-mail inválido'
-        this.show()
-        setTimeout(() => self.hide(), 3000)
+        this.activateAlert()
+        setTimeout(() => self.hideAlert(), 3000)
         return false
       }
 
@@ -224,25 +235,27 @@ export default {
 
     attemptLogin () {
       const self = this
-
       if (this.$v.user.password.$error) {
         this.alertMessage = 'Senha inválida'
-        this.show()
-        setTimeout(() => self.hide(), 3000)
+        this.activateAlert()
+        setTimeout(() => self.hideAlert(), 3000)
         return false
       }
 
-      const user = this.user
-      this.doLogin({ ...user })
-        .then(() => {
-          this.$router.push('/home')
-        })
-        .catch(() => {
-          this.alertMessage = 'E-mail ou senha não conferem, tente novamente'
-          this.show()
-          setTimeout(() => self.hide(), 3000)
-          return false
-        })
+      this.loading = true
+      setTimeout(() => {
+        const user = this.user
+        this.doLogin({ ...user })
+          .then(() => this.$router.push('/home'))
+          .catch(() => {
+            this.alertMessage = 'E-mail ou senha não conferem, tente novamente'
+            this.activateAlert()
+            setTimeout(() => self.hideAlert(), 3000)
+            return false
+          })
+
+        this.loading = false
+      }, 3000)
     },
 
     checkEmail () {
@@ -250,8 +263,8 @@ export default {
 
       if (this.$v.emailToResend.$error) {
         this.alertMessage = 'E-mail inválido'
-        this.show()
-        setTimeout(() => self.hide(), 3000)
+        this.activateAlert()
+        setTimeout(() => self.hideAlert(), 3000)
         return false
       }
 
@@ -259,8 +272,8 @@ export default {
         .then(() => this.$refs.stepForgotPassword.next())
         .catch(() => {
           this.alertMessage = 'E-mail inexistente'
-          this.show()
-          setTimeout(() => self.hide(), 3000)
+          this.activateAlert()
+          setTimeout(() => self.hideAlert(), 3000)
           return false
         })
     },
@@ -270,15 +283,15 @@ export default {
 
       if (this.$v.token.$error) {
         this.alertMessage = 'Token é obrigatório'
-        this.show()
-        setTimeout(() => self.hide(), 3000)
+        this.activateAlert()
+        setTimeout(() => self.hideAlert(), 3000)
         return false
       }
 
       if (this.$v.newPassword.$error) {
         this.alertMessage = 'Senha é obrigatória'
-        this.show()
-        setTimeout(() => self.hide(), 3000)
+        this.activateAlert()
+        setTimeout(() => self.hideAlert(), 3000)
         return false
       }
 
@@ -287,22 +300,26 @@ export default {
         email: this.user.email,
         newPassword: this.newPassword
       }
+      this.loading = true
+      setTimeout(() => {
+        this.doChangePassword({ ...dataForChanging })
+          .then(() => this.$refs.basicModal.close())
+          .catch(() => {
+            this.alertMessage = 'Um erro aconteceu. Tente novamente.'
+            this.activateAlert()
+            setTimeout(() => self.hideAlert(), 3000)
+            return false
+          })
 
-      this.doChangePassword({ ...dataForChanging })
-        .then(() => this.$refs.basicModal.close())
-        .catch(() => {
-          this.alertMessage = 'Um erro aconteceu. Tente novamente.'
-          this.show()
-          setTimeout(() => self.hide(), 3000)
-          return false
-        })
+        this.loading = false
+      }, 3000)
     },
 
-    show () {
+    activateAlert () {
       this.showAlert = true
     },
 
-    hide () {
+    hideAlert () {
       this.showAlert = false
     }
   }
