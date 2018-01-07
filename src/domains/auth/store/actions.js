@@ -10,7 +10,7 @@ export const doLogin = ({ commit }, user) => {
       commit(types.SET_TOKEN, data.result.token)
       localStorage.setItem('token', data.result.token)
     })
-    .catch(error => console.log(`Erro ao logar: ${error}`))
+    .catch(error => Promise.reject(error))
 }
 
 // export const doLogout = ({ commit }) => {
