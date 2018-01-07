@@ -63,19 +63,9 @@
     <q-modal ref="basicModal" :content-css="modalStyle">
       <q-stepper flat ref="stepForgotPassword" v-model="stepForgotPassword" color="primary">
         <q-step default name="email" title="Reenvio" active-icon="mail">
-          <div class="modal-title">
-            Digite um e-mail que você possa verificar agora
-          </div>
+          <div class="modal-title">Digite um e-mail que você possa verificar agora</div>
           
-          <q-field icon="email" helper="exemplo: meuemail@gmail.com">
-            <q-input 
-              type="text" 
-              v-model="emailToResend"
-              float-label="E-mail"
-              clearable
-              @keyup.enter="checkEmail">
-            </q-input>
-          </q-field>
+          <InputEmailToResend :emailToResend.sync="emailToResend" @keyUp="checkEmail"></InputEmailToResend>
 
           <q-stepper-navigation class="padding-top justify-between">
             <q-btn color="primary" icon="arrow_back" flat @click="$refs.basicModal.close()">Voltar</q-btn>
@@ -84,24 +74,9 @@
         </q-step>
 
         <q-step name="password" title="Mudar senha" icon="lock" active-icon="lock">
-          <q-field icon="vpn_key">
-            <q-input
-              type="text"
-              float-label="Token recebido pelo e-mail"
-              v-model="token"
-              clearable
-              @keyup.enter="changePassword"
-            />
-          </q-field>
-          <q-field icon="lock">
-            <q-input
-              type="password"
-              float-label="Escolha uma nova senha"
-              v-model="newPassword"
-              clearable
-              @keyup.enter="changePassword"
-            />
-          </q-field>
+          <InputToken :token.sync="token" @keyUp="changePassword"></InputToken>
+          <InputNewPassword :newPassword.sync="newPassword" @keyUp="changePassword"></InputNewPassword>
+
           <div class="padding-top flex justify-between">
             <q-btn color="primary" icon="arrow_back" flat @click="$refs.stepForgotPassword.previous()">Voltar</q-btn>
             <q-btn color="primary" icon="mode_edit" @click="changePassword">Mudar senha</q-btn>
@@ -126,6 +101,9 @@ import { mapActions } from 'vuex'
 import { required, email } from 'vuelidate/lib/validators'
 import InputEmail from './inputs/InputEmail'
 import InputPassword from './inputs/InputPassword'
+import InputEmailToResend from './inputs/InputEmailToResend'
+import InputToken from './inputs/InputToken'
+import InputNewPassword from './inputs/InputNewPassword'
 import {
   QAlert,
   QBtn,
@@ -150,6 +128,9 @@ export default {
   components: {
     InputEmail,
     InputPassword,
+    InputEmailToResend,
+    InputToken,
+    InputNewPassword,
     QAlert,
     QBtn,
     QInput,
@@ -236,9 +217,10 @@ export default {
         this.doLogin({ ...user })
           .then(() => this.$router.push('/home'))
           .catch(() => {
-            this.alertMessage = 'E-mail ou senha não conferem, tente novamente'
+            this.alertMessage = 'E-mail ou senha não conferem.'
             this.activateAlert()
             setTimeout(() => self.hideAlert(), 2000)
+            this.$router.push('/')
             return false
           })
 
@@ -293,9 +275,10 @@ export default {
         this.doChangePassword({ ...dataForChanging })
           .then(() => this.$refs.basicModal.close())
           .catch(() => {
-            this.alertMessage = 'Um erro aconteceu. Tente novamente.'
+            this.alertMessage = 'Um erro aconteceu.'
             this.activateAlert()
             setTimeout(() => self.hideAlert(), 2000)
+            this.$router.push('/')
             return false
           })
 
