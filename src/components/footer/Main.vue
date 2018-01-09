@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <!-- Layout footer -->
     <q-toolbar slot="footer">
       footer
@@ -10,11 +9,11 @@
 </template>
 
 <script>
-import { QLayout, QSideLink, QItemMain, QToolbar, QToolbarTitle, QTabs, QTab, QBtn, QIcon } from 'quasar-framework'
+import { QToolbar } from 'quasar'
 
 export default {
   name: 'myFooter',
-  components: { QLayout, QSideLink, QItemMain, QToolbar, QToolbarTitle, QTabs, QTab, QBtn, QIcon },
+  components: { QToolbar },
 
   data () {
     return {
