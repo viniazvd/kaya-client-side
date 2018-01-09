@@ -69,7 +69,6 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import { required, email } from 'vuelidate/lib/validators'
-import MyInput from '../../../components/inputs/myInput'
 import {
   QField,
   QAlert,
@@ -88,7 +87,7 @@ export default {
   name: 'login',
 
   components: {
-    MyInput,
+    MyInput: () => import('../../../components/inputs/myInput'),
     QField,
     QAlert,
     QBtn,

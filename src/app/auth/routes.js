@@ -1,11 +1,9 @@
-import Login from './components/Login'
-import ForgotPassword from './components/ForgotPassword'
-import ForgotEmail from './components/ForgotEmail'
-import CreateAccount from './components/CreateAccount'
+const load = component => () => import(`./components/${component}.vue`)
+// import { load } from '../../support/lazyLoader'
 
 export default [
-  { path: '/login', component: Login, meta: { requiresAuth: false } },
-  { path: '/forgotPassword', component: ForgotPassword, meta: { requiresAuth: false } },
-  { path: '/forgotEmail', component: ForgotEmail, meta: { requiresAuth: false } },
-  { path: '/createAccount', component: CreateAccount, meta: { requiresAuth: false } }
+  { path: '/login', component: load('Login'), meta: { requiresAuth: false } },
+  { path: '/forgotPassword', component: load('ForgotPassword'), meta: { requiresAuth: false } },
+  { path: '/forgotEmail', component: load('ForgotEmail'), meta: { requiresAuth: false } },
+  { path: '/createAccount', component: load('CreateAccount'), meta: { requiresAuth: false } }
 ]
