@@ -1,5 +1,5 @@
 import Main from './components/Main'
 
 export default [
-  { path: '/home', component: Main }
+  { path: '/home', component: Main, meta: { requiresAuth: true } }
 ]
