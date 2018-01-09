@@ -18,14 +18,17 @@ export const doLogin = ({ commit }, user) => {
     .catch(error => Promise.reject(error))
 }
 
+export const doLogout = ({ commit }) => {
+  commit(types.SET_USER, {})
+  localStorage.removeItem('user', '')
+
+  commit(types.SET_TOKEN, '')
+  localStorage.removeItem('token', '')
+}
+
 export const setEmail = ({ commit }, email) => {
   commit(types.SET_EMAIL, email)
 }
-
-// export const doLogout = ({ commit }) => {
-//   commit(types.SET_USER, {})
-//   commit(types.SET_TOKEN, '')
-// }
 
 export const doVerifyEmail = ({ commit }, email) => {
   return getEmailToken(email)
