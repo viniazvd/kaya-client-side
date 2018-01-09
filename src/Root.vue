@@ -1,29 +1,22 @@
 <template>
   <div id="q-root">
-    <div v-if="this.isLogged()">
-      <Navbar />
-    </div>
+    <Navbar v-if="this.isAuthenticated()" />
     
-    <div v-else>
-      <Auth></Auth>
-    </div>
-  
     <router-view />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import Auth from './app/auth/components/Main'
 import Navbar from './components/navbar/Main'
 
 export default {
   name: 'root',
 
-  components: { Auth, Navbar },
+  components: { Navbar },
 
   methods: {
-    ...mapGetters(['isLogged'])
+    ...mapGetters(['isAuthenticated'])
   }
 }
 </script>
