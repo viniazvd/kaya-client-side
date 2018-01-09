@@ -14,7 +14,7 @@
 
         <q-card-main>
           <q-stepper flat ref="stepForgotEmail" v-model="stepForgotEmail" color="primary">
-            <q-step default name="phone" title="Telefone" active-icon="phone_forwarded">
+            <q-step default title="Telefone" active-icon="phone_forwarded">
               <q-field icon="call">
                 <MyInput :prop.sync="phone" nameLabel="Telefone" @keyUp="next"></MyInput>
               </q-field>
@@ -25,9 +25,9 @@
               </q-stepper-navigation>
             </q-step>
 
-            <q-step name="password" title="Nome/Sobrenome" icon="import_contacts" active-icon="import_contacts">
+            <q-step title="Nome/Sobrenome" icon="import_contacts" active-icon="import_contacts">
               <q-field icon="import_contacts">
-                <MyInput :prop.sync="phone" nameLabel="Nome" @keyUp="getEmail"></MyInput>
+                <MyInput :prop.sync="name" nameLabel="Nome" @keyUp="getEmail"></MyInput>
               </q-field>
 
               <div class="padding-top flex justify-between">
@@ -96,7 +96,6 @@ export default {
     return {
       phone: '',
       name: '',
-      lastName: '',
       stepForgotEmail: 'first',
       showAlert: false,
       alertMessage: '',
@@ -106,8 +105,7 @@ export default {
 
   validations: {
     phone: { required },
-    name: { required },
-    lastName: { required }
+    name: { required }
   },
 
   methods: {
