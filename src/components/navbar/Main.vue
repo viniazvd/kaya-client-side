@@ -132,10 +132,6 @@ export default {
   methods: {
     ...mapActions(['doLogout']),
 
-    showToast () {
-      Toast.create((this.$q.platform.is.desktop ? 'Clicked' : 'Tapped'))
-    },
-
     logout () {
       this.doLogout()
       this.$router.push('/login')
