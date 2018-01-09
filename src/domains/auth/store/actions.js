@@ -1,5 +1,10 @@
-import { postLogin, getEmailToken, postNewPassword } from '../services'
+import { postCreateAccount, postLogin, getEmailToken, postNewPassword } from '../services'
 import * as types from './mutations-types'
+
+export const doCreateAccount = ({ commit }, name, email, password) => {
+  return postCreateAccount(name, email, password)
+    .catch(error => Promise.reject(error))
+}
 
 export const doLogin = ({ commit }, user) => {
   return postLogin(user.email, user.password)
