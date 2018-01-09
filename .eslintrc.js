@@ -35,5 +35,7 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'brace-style': [2, 'stroustrup', { 'allowSingleLine': true }]
+    // "vue/html-self-closing": "off",
+    // "vue/no-parsing-error": [2, { "x-invalid-end-tag": true }]
   }
 }
