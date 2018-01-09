@@ -9,6 +9,20 @@
           <q-icon name="menu" />
         </q-btn>
         <div class="q-toolbar-title">Kaya</div>
+        <q-btn flat>
+          <q-icon name="more_vert" />
+          <q-popover ref="popover" :anchor="anchor" :self="self">
+            <q-list link style="min-width: 150px">
+              <q-item @click="null, $refs.popover.close()">
+                <q-item-main label="Minha conta" />
+              </q-item>
+
+              <q-item @click="logout(), $refs.popover.close()">
+                <q-item-main label="Sair" />
+              </q-item>
+            </q-list>
+          </q-popover>
+        </q-btn>
       </q-toolbar>
 
       <!-- Defining left side of QLayout. Notice slot="left" -->
@@ -64,14 +78,68 @@
 </template>
 
 <script>
-import { QLayout, QSideLink, QItemMain, QToolbar, QToolbarTitle, QBtn, QIcon } from 'quasar-framework'
+import { mapActions } from 'vuex'
+import {
+  QLayout,
+  QSideLink,
+  QItemMain,
+  QToolbar,
+  Toast,
+  QPopover,
+  QList,
+  QItem,
+  QBtn,
+  QIcon
+} from 'quasar'
 
 export default {
   name: 'navbar',
-  components: { QLayout, QSideLink, QItemMain, QToolbar, QToolbarTitle, QBtn, QIcon },
+
+  components: {
+    QLayout,
+    QSideLink,
+    QItemMain,
+    QToolbar,
+    Toast,
+    QPopover,
+    QList,
+    QItem,
+    QBtn,
+    QIcon
+  },
 
   data () {
     return {
+      defaultAnchor: {
+        vertical: 'bottom',
+        horizontal: 'left'
+      },
+      defaultSelf: {
+        vertical: 'top',
+        horizontal: 'left'
+      }
+    }
+  },
+  computed: {
+    anchor () {
+      return `${this.defaultAnchor.vertical} ${this.defaultAnchor.horizontal}`
+    },
+    self () {
+      return `${this.defaultSelf.vertical} ${this.defaultSelf.horizontal}`
+    }
+  },
+
+  methods: {
+    ...mapActions(['doLogout']),
+
+    showToast () {
+      Toast.create((this.$q.platform.is.desktop ? 'Clicked' : 'Tapped'))
+    },
+
+    logout () {
+      console.log('logout')
+      this.doLogout()
+      this.$router.push('/login')
     }
   }
 }
