@@ -137,7 +137,6 @@ export default {
     },
 
     logout () {
-      console.log('logout')
       this.doLogout()
       this.$router.push('/login')
     }
