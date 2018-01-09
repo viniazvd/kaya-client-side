@@ -5,8 +5,6 @@ import routes from './routes'
 
 Vue.use(VueRouter)
 
-// const load = (component) => () => import(`@/${component}.vue`)
-
 const router = new VueRouter({
   routes,
   linkActiveClass: 'active',
