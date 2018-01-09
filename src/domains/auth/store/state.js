@@ -3,5 +3,6 @@ const token = localStorage.getItem('token')
 
 export default {
   user: user || {},
+  email: '',
   token: token || ''
 }
