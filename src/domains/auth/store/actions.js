@@ -13,6 +13,10 @@ export const doLogin = ({ commit }, user) => {
     .catch(error => Promise.reject(error))
 }
 
+export const setEmail = ({ commit }, email) => {
+  commit(types.SET_EMAIL, email)
+}
+
 // export const doLogout = ({ commit }) => {
 //   commit(types.SET_USER, {})
 //   commit(types.SET_TOKEN, '')
