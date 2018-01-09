@@ -13,6 +13,9 @@
         <q-card-separator />
 
         <q-card-main>
+          <q-field icon="import_contacts">
+            <MyInput :prop.sync="newUser.name" nameLabel="Nome" @keyUp="createAccount"></MyInput>
+          </q-field>
           <q-field icon="mail" helper="exemplo: meuemail@gmail.com">
             <MyInput :prop.sync="newUser.email" nameLabel="E-mail" @keyUp="createAccount"></MyInput>
           </q-field>
@@ -45,7 +48,7 @@
 </template>
 
 <script>
-// import { mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import { required, email } from 'vuelidate/lib/validators'
 import MyInput from '../../../components/inputs/myInput'
 import {
@@ -83,6 +86,7 @@ export default {
   data () {
     return {
       newUser: {
+        name: '',
         email: '',
         password: ''
       },
@@ -101,7 +105,7 @@ export default {
   },
 
   methods: {
-    // ...mapActions(['doVerifyEmail', 'doChangePassword']),
+    ...mapActions(['doCreateAccount']),
 
     createAccount () {
       this.$v.$touch()
@@ -120,6 +124,21 @@ export default {
         setTimeout(() => self.hideAlert(), 2000)
         return false
       }
+
+      this.loading = true
+      setTimeout(() => {
+        const newUser = this.newUser
+        this.doCreateAccount({ ...newUser })
+          .then(() => this.$router.push('/login'))
+          .catch(() => {
+            this.alertMessage = 'Um erro aconteceu.'
+            this.activateAlert()
+            setTimeout(() => self.hideAlert(), 2000)
+            return false
+          })
+
+        this.loading = false
+      }, 2000)
     },
 
     activateAlert () {
