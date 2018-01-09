@@ -1,5 +1,9 @@
 import { http } from '../../../support/http'
 
+export const postCreateAccount = ({ name, email, password }) => {
+  return http.post('auth/signup', { name, email, password })
+}
+
 export const postLogin = (email, password) => {
   return http.post('auth/signin', { email, password })
     .then(response => response.data)
