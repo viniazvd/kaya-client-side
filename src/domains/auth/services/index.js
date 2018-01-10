@@ -14,6 +14,11 @@ export const getEmailToken = email => {
   // .then(response => response.data.result.msg)
 }
 
+export const getEmails = () => {
+  return http.get('user')
+    .then(response => response.data.results.users)
+}
+
 export const postNewPassword = ({ token, email, newPassword }) => {
   return http.post('auth/change-password', { token, email, newPassword })
 }
