@@ -1,5 +1,4 @@
 const load = component => () => import(`./components/${component}.vue`)
-// import { load } from '../../support/lazyLoader'
 
 export default [
   { path: '/login', component: load('Login'), meta: { requiresAuth: false } },
