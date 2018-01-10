@@ -14,25 +14,22 @@
 
         <q-card-main>
           <q-stepper flat ref="stepForgotEmail" v-model="stepForgotEmail" color="primary">
-            <q-step default title="Telefone" active-icon="phone_forwarded">
-              <q-field icon="call">
-                <MyInput :prop.sync="phone" nameLabel="Telefone" @keyUp="next"></MyInput>
-              </q-field>
-
-              <q-stepper-navigation class="padding-top justify-between">
-                <q-btn color="primary" icon="arrow_back" flat @click="$router.push('/login')">Voltar</q-btn>
-                <q-btn color="primary" icon="search" @click="next">PRÓXIMA</q-btn>
-              </q-stepper-navigation>
-            </q-step>
-
-            <q-step title="Nome/Sobrenome" icon="import_contacts" active-icon="import_contacts">
+            <q-step default title="Nome" active-icon="import_contacts">
               <q-field icon="import_contacts">
                 <MyInput :prop.sync="name" nameLabel="Nome" @keyUp="getEmail"></MyInput>
               </q-field>
 
+              <q-stepper-navigation class="padding-top justify-between">
+                <q-btn color="primary" icon="arrow_back" flat @click="$router.push('/login')">Voltar</q-btn>
+                <q-btn color="primary" icon="mode_edit" @click="getEmail">Pesquisar</q-btn>
+              </q-stepper-navigation>
+            </q-step>
+
+            <q-step title="Lista de e-mails" icon="email" active-icon="email">
+              <div class="list-emails" v-for="user in this.users" :key="user.id">{{ user.email }}</div>
+
               <div class="padding-top flex justify-between">
                 <q-btn color="primary" icon="arrow_back" flat @click="$refs.stepForgotEmail.previous()">Voltar</q-btn>
-                <q-btn color="primary" icon="mode_edit" @click="getEmail">Pesquisar</q-btn>
               </div>
             </q-step>
           </q-stepper>
@@ -58,6 +55,7 @@
 
 <script>
 // import { mapActions, mapGetters } from 'vuex'
+import { getEmails } from '../../../domains/auth/services'
 import { required } from 'vuelidate/lib/validators'
 import {
   QField,
@@ -93,8 +91,8 @@ export default {
 
   data () {
     return {
-      phone: '',
       name: '',
+      users: [],
       stepForgotEmail: 'first',
       showAlert: false,
       alertMessage: '',
@@ -103,17 +101,14 @@ export default {
   },
 
   validations: {
-    phone: { required },
     name: { required }
   },
 
   methods: {
-    next () {
-      this.$refs.stepForgotEmail.next()
-    },
-
     getEmail () {
-      console.log('ae')
+      this.$refs.stepForgotEmail.next()
+      return getEmails()
+        .then(data => (this.users = data))
     }
   }
 }
@@ -147,5 +142,9 @@ export default {
 
 .padding-top {
   margin-top: 45px;
+}
+
+.list-emails {
+  text-align: center;
 }
 </style>
