@@ -1,5 +1,5 @@
-const Main = () => import('./components/Main')
+const load = component => () => import(`./components/${component}.vue`)
 
 export default [
-  { path: '/home', component: Main, meta: { requiresAuth: true } }
+  { path: '/home', component: load('Main'), meta: { requiresAuth: true } }
 ]
