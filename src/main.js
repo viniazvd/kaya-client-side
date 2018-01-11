@@ -1,18 +1,29 @@
 require(`quasar/dist/quasar.${__THEME}.css`)
 
+// core
 import Vue from 'vue'
 import Quasar from 'quasar'
-import Vuelidate from 'vuelidate'
 import router from './router'
 import store from './store'
-// import { Http } from './support/pluggins/http'
+
+// utils
+import Vuelidate from 'vuelidate'
+
+// pluggins
+import HttpPlugin from './support/pluggins/http'
 import UserPlugin from './support/pluggins/user'
 import Loader from './support/pluggins/loader'
 
 Vue.config.productionTip = false
+
+// // registering core
 Vue.use(Quasar)
+
+// // registering utils
 Vue.use(Vuelidate)
-// Vue.use(Http)
+
+// registering pluggins
+Vue.use(HttpPlugin)
 Vue.use(UserPlugin)
 Vue.use(Loader, store)
 
@@ -27,9 +38,6 @@ Quasar.start(() => {
     el: '#q-root',
     router,
     store,
-    render: h => h(require('./Root').default),
-    mounted () {
-      return this.$httpp
-    }
+    render: h => h(require('./Root').default)
   })
 })
