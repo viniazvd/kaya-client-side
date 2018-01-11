@@ -18,7 +18,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Navbar from './components/navbar/Main'
+import Navbar from './components/navbar/TheNavbar'
 import { QInnerLoading, QSpinnerGears } from 'quasar'
 
 export default {

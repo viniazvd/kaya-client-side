@@ -55,7 +55,7 @@ export default {
 
   components: {
     AppInput: () => import('../../../components/inputs/AppInput'),
-    NegativeAlert: () => import('../../../components/alerts/Negative'),
+    NegativeAlert: () => import('../../../components/alerts/AlertNegative'),
     QField,
     QBtn,
     QCard,
