@@ -31,10 +31,8 @@ export default {
 
 <style scoped>
 .my-alert {
-  margin-left: 448px;
-  margin-right: 446px;
-  margin-bottom: 115px;
-  text-align: center;
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 </style>
