@@ -26,10 +26,6 @@ export const doLogout = ({ commit }) => {
   localStorage.removeItem('token', '')
 }
 
-export const setEmail = ({ commit }, email) => {
-  commit(types.SET_EMAIL, email)
-}
-
 export const doVerifyEmail = ({ commit }, email) => {
   return getEmailToken(email)
     .catch(error => Promise.reject(error))
