@@ -41,7 +41,7 @@
           <q-item-main label="Atividades" />
         </q-side-link>
 
-        <q-side-link item to="/clientes">
+        <q-side-link item to="/clients">
           <q-item-main label="Clientes" />
         </q-side-link>
 
@@ -72,7 +72,11 @@
       -->
       </div>
       <router-view></router-view>
-  </q-layout>
+
+      <q-toolbar slot="footer">
+        footer
+      </q-toolbar>
+    </q-layout>
 
   </div>
 </template>
