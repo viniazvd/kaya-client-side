@@ -11,7 +11,7 @@
             <q-step default name="email" title="Reenvio" active-icon="mail">
               <div class="title">Digite um e-mail que você possa verificar agora</div>
               <q-field icon="mail" helper="exemplo: meuemail@gmail.com">
-                <MyInput :prop.sync="emailToResend" nameLabel="E-mail" @keyUp="checkEmail"></MyInput>
+                <AppInput :prop.sync="emailToResend" nameLabel="E-mail" @keyUp="checkEmail"></AppInput>
               </q-field>        
 
               <q-stepper-navigation class="padding-top justify-between">
@@ -22,10 +22,10 @@
 
             <q-step name="password" title="Mudar senha" icon="lock" active-icon="lock">
               <q-field icon="vpn_key">
-                <MyInput :prop.sync="token" nameLabel="Token recebido pelo e-mail" @keyUp="changePassword"></MyInput>
+                <AppInput :prop.sync="token" nameLabel="Token recebido pelo e-mail" @keyUp="changePassword"></AppInput>
               </q-field>
               <q-field icon="lock">
-                <MyInput :prop.sync="newPassword" propType="password" nameLabel="Escolha uma nova senha" @keyUp="changePassword"></MyInput>
+                <AppInput :prop.sync="newPassword" propType="password" nameLabel="Escolha uma nova senha" @keyUp="changePassword"></AppInput>
               </q-field>
 
               <div class="padding-top flex justify-between">
@@ -61,7 +61,7 @@ export default {
   name: 'forgotPassword',
 
   components: {
-    MyInput: () => import('../../../components/inputs/myInput'),
+    AppInput: () => import('../../../components/inputs/AppInput'),
     NegativeAlert: () => import('../../../components/alerts/Negative'),
     QField,
     QBtn,

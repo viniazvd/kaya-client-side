@@ -10,7 +10,7 @@
           <q-stepper flat ref="stepperLogin" v-model="stepLogin" color="primary">
             <q-step default title="E-mail" active-icon="mail">
               <q-field icon="mail" helper="exemplo: meuemail@gmail.com">
-                <MyInput :prop.sync="user.email" nameLabel="E-mail" @keyUp="goToPassword"></MyInput>
+                <AppInput :prop.sync="user.email" nameLabel="E-mail" @keyUp="goToPassword"></AppInput>
               </q-field>
 
               <q-stepper-navigation class="flex justify-start">
@@ -27,7 +27,7 @@
 
             <q-step title="Senha" icon="lock" active-icon="lock">
               <q-field icon="lock">
-                <MyInput :prop.sync="user.password" propType="password" nameLabel="Senha" @keyUp="attemptLogin"></MyInput>
+                <AppInput :prop.sync="user.password" propType="password" nameLabel="Senha" @keyUp="attemptLogin"></AppInput>
               </q-field>
 
               <q-stepper-navigation class="flex justify-start">
@@ -67,7 +67,7 @@ export default {
   name: 'login',
 
   components: {
-    MyInput: () => import('../../../components/inputs/myInput'),
+    AppInput: () => import('../../../components/inputs/AppInput'),
     NegativeAlert: () => import('../../../components/alerts/Negative'),
     QField,
     QBtn,

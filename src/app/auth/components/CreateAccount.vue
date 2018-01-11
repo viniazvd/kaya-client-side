@@ -8,13 +8,13 @@
 
         <q-card-main>
           <q-field icon="import_contacts">
-            <MyInput :prop.sync="newUser.name" nameLabel="Nome" @keyUp="createAccount"></MyInput>
+            <AppInput :prop.sync="newUser.name" nameLabel="Nome" @keyUp="createAccount"></AppInput>
           </q-field>
           <q-field icon="mail" helper="exemplo: meuemail@gmail.com">
-            <MyInput :prop.sync="newUser.email" nameLabel="E-mail" @keyUp="createAccount"></MyInput>
+            <AppInput :prop.sync="newUser.email" nameLabel="E-mail" @keyUp="createAccount"></AppInput>
           </q-field>
           <q-field icon="lock">
-            <MyInput :prop.sync="newUser.password" propType="password" nameLabel="Escolha uma nova senha" @keyUp="createAccount"></MyInput>
+            <AppInput :prop.sync="newUser.password" propType="password" nameLabel="Escolha uma nova senha" @keyUp="createAccount"></AppInput>
           </q-field>
 
           <div class="padding-top flex justify-between">
@@ -48,7 +48,7 @@ export default {
   name: 'createAccount',
 
   components: {
-    MyInput: () => import('../../../components/inputs/myInput'),
+    AppInput: () => import('../../../components/inputs/AppInput'),
     NegativeAlert: () => import('../../../components/alerts/Negative'),
     QField,
     QBtn,

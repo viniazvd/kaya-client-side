@@ -10,7 +10,7 @@
           <q-stepper flat ref="stepForgotEmail" v-model="stepForgotEmail" color="primary">
             <q-step default title="Nome" active-icon="import_contacts">
               <q-field icon="import_contacts">
-                <MyInput :prop.sync="name" nameLabel="Nome" @keyUp="getEmail"></MyInput>
+                <AppInput :prop.sync="name" nameLabel="Nome" @keyUp="getEmail"></AppInput>
               </q-field>
 
               <q-stepper-navigation class="padding-top justify-between">
@@ -54,7 +54,7 @@ export default {
   name: 'forgotEmail',
 
   components: {
-    MyInput: () => import('../../../components/inputs/myInput'),
+    AppInput: () => import('../../../components/inputs/AppInput'),
     NegativeAlert: () => import('../../../components/alerts/Negative'),
     QField,
     QBtn,
