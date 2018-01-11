@@ -53,6 +53,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import { required, email } from 'vuelidate/lib/validators'
+import alertMethods from '../../../support/mixins/alertsControl'
 import {
   QField,
   QAlert,
@@ -80,6 +81,8 @@ export default {
     QStep,
     QStepperNavigation
   },
+
+  mixins: [alertMethods],
 
   data () {
     return {
