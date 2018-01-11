@@ -40,10 +40,6 @@
       v-model="showAlert">
       {{ alertMessage }}
     </q-alert>
-
-    <q-inner-loading :visible="loading">
-      <q-spinner-gears size="300px" color="primary" />
-    </q-inner-loading>
   </div>
 </template>
 
@@ -60,9 +56,7 @@ import {
   QCardMain,
   QStepper,
   QStep,
-  QStepperNavigation,
-  QInnerLoading,
-  QSpinnerGears
+  QStepperNavigation
 } from 'quasar'
 
 export default {
@@ -78,9 +72,7 @@ export default {
     QCardMain,
     QStepper,
     QStep,
-    QStepperNavigation,
-    QInnerLoading,
-    QSpinnerGears
+    QStepperNavigation
   },
 
   data () {
@@ -89,8 +81,7 @@ export default {
       users: [],
       stepForgotEmail: 'first',
       showAlert: false,
-      alertMessage: '',
-      loading: false
+      alertMessage: ''
     }
   },
 
