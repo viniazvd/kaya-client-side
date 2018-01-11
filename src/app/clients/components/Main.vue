@@ -1,0 +1,40 @@
+<template>
+  <div>
+    CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>CLIENTES
+    <br>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'clients'
+}
+</script>
