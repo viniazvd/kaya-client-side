@@ -38,15 +38,7 @@
       </q-card>
     </div>
 
-    <q-alert
-      class="my-alert"
-      color="negative"
-      icon="warning"
-      position="bottom"
-      dismissible
-      v-model="showAlert">
-      {{ alertMessage }}
-    </q-alert>
+    <NegativeAlert :showAlert.sync="showAlert" :alertMessage="alertMessage"></NegativeAlert>
   </div>
 </template>
 
@@ -56,7 +48,6 @@ import { required, email } from 'vuelidate/lib/validators'
 import alertMethods from '../../../support/mixins/alertsControl'
 import {
   QField,
-  QAlert,
   QBtn,
   QCard,
   QCardSeparator,
@@ -71,8 +62,8 @@ export default {
 
   components: {
     MyInput: () => import('../../../components/inputs/myInput'),
+    NegativeAlert: () => import('../../../components/alerts/Negative'),
     QField,
-    QAlert,
     QBtn,
     QCard,
     QCardSeparator,
@@ -182,14 +173,6 @@ export default {
 </script>
 
 <style scoped>
-.my-alert {
-  margin-left: 448px;
-  margin-right: 446px;
-  margin-bottom: 115px;
-  text-align: center;
-  position: relative;
-}
-
 .card-wrapper {
   width: 100%;
   height: 100%;
