@@ -37,7 +37,6 @@
 
 <script>
 // import { mapActions, mapGetters } from 'vuex'
-import { getEmails } from '../../../domains/auth/services'
 import { required } from 'vuelidate/lib/validators'
 import alertMethods from '../../../support/mixins/alertsControl'
 import {
@@ -86,7 +85,7 @@ export default {
   methods: {
     getEmail () {
       this.$refs.stepForgotEmail.next()
-      return getEmails()
+      this.$user.getEmails()
         .then(data => (this.users = data))
     }
   }
