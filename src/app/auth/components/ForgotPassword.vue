@@ -93,7 +93,11 @@ export default {
   },
 
   mounted () {
-    this.emailToResend = this.getEmail
+    // Código que irá rodar apenas após toda
+    // a árvore do componente ter sido renderizada
+    this.$nextTick(function () {
+      this.emailToResend = this.getEmail
+    })
   },
 
   methods: {

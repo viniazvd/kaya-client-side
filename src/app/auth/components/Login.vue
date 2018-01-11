@@ -101,7 +101,11 @@ export default {
   },
 
   mounted () {
-    this.user.email = this.getEmail
+    // Código que irá rodar apenas após toda
+    // a árvore do componente ter sido renderizada
+    this.$nextTick(function () {
+      this.user.email = this.getEmail
+    })
   },
 
   methods: {
