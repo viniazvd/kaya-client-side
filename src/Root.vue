@@ -8,7 +8,7 @@
       </a>
     </div>
 
-    <router-view />
+    <router-view v-if="!this.isAuthenticated()" />
   </div>
 </template>
 
