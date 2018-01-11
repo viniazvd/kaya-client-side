@@ -117,8 +117,8 @@ export default {
 
       if (this.$v.user.email.$error) {
         this.alertMessage = 'E-mail inválido'
-        this.activateAlert()
-        setTimeout(() => self.hideAlert(), 2000)
+        this.$activateAlert()
+        setTimeout(() => self.$hideAlert(), 2000)
         return false
       }
 
@@ -131,8 +131,8 @@ export default {
       const self = this
       if (this.$v.user.password.$error) {
         this.alertMessage = 'Senha inválida'
-        this.activateAlert()
-        setTimeout(() => self.hideAlert(), 2000)
+        this.$activateAlert()
+        setTimeout(() => self.$hideAlert(), 2000)
         return false
       }
 
@@ -143,8 +143,8 @@ export default {
           .then(() => this.$router.push('/home'))
           .catch(() => {
             this.alertMessage = 'E-mail ou senha não conferem.'
-            this.activateAlert()
-            setTimeout(() => self.hideAlert(), 2000)
+            this.$activateAlert()
+            setTimeout(() => self.$hideAlert(), 2000)
             this.$router.push('/')
             return false
           })

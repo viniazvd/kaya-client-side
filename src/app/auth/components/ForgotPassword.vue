@@ -104,8 +104,8 @@ export default {
 
       if (this.$v.emailToResend.$error) {
         this.alertMessage = 'E-mail inválido'
-        this.activateAlert()
-        setTimeout(() => self.hideAlert(), 2000)
+        this.$activateAlert()
+        setTimeout(() => self.$hideAlert(), 2000)
         return false
       }
 
@@ -113,8 +113,8 @@ export default {
         .then(() => this.$refs.stepForgotPassword.next())
         .catch(() => {
           this.alertMessage = 'E-mail inexistente'
-          this.activateAlert()
-          setTimeout(() => self.hideAlert(), 2000)
+          this.$activateAlert()
+          setTimeout(() => self.$hideAlert(), 2000)
           return false
         })
     },
@@ -125,15 +125,15 @@ export default {
 
       if (this.$v.token.$error) {
         this.alertMessage = 'Token é obrigatório'
-        this.activateAlert()
-        setTimeout(() => self.hideAlert(), 2000)
+        this.$activateAlert()
+        setTimeout(() => self.$hideAlert(), 2000)
         return false
       }
 
       if (this.$v.newPassword.$error) {
         this.alertMessage = 'Senha é obrigatória'
-        this.activateAlert()
-        setTimeout(() => self.hideAlert(), 2000)
+        this.$activateAlert()
+        setTimeout(() => self.$hideAlert(), 2000)
         return false
       }
 
@@ -148,21 +148,13 @@ export default {
           .then(() => this.$router.push('/login'))
           .catch(() => {
             this.alertMessage = 'Um erro aconteceu.'
-            this.activateAlert()
-            setTimeout(() => self.hideAlert(), 2000)
+            this.$activateAlert()
+            setTimeout(() => self.$hideAlert(), 2000)
             return false
           })
 
         this.$loader.hide()
       }, 2000)
-    },
-
-    activateAlert () {
-      this.showAlert = true
-    },
-
-    hideAlert () {
-      this.showAlert = false
     }
   },
 

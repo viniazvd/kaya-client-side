@@ -91,15 +91,15 @@ export default {
 
       if (this.$v.newUser.email.$error) {
         this.alertMessage = 'E-mail inválido'
-        this.activateAlert()
-        setTimeout(() => self.hideAlert(), 2000)
+        this.$activateAlert()
+        setTimeout(() => self.$hideAlert(), 2000)
         return false
       }
 
       if (this.$v.newUser.password.$error) {
         this.alertMessage = 'Senha obrigatória'
-        this.activateAlert()
-        setTimeout(() => self.hideAlert(), 2000)
+        this.$activateAlert()
+        setTimeout(() => self.$hideAlert(), 2000)
         return false
       }
 
@@ -110,21 +110,13 @@ export default {
           .then(() => this.$router.push('/login'))
           .catch(() => {
             this.alertMessage = 'Um erro aconteceu.'
-            this.activateAlert()
-            setTimeout(() => self.hideAlert(), 2000)
+            this.$activateAlert()
+            setTimeout(() => self.$hideAlert(), 2000)
             return false
           })
 
         this.$loader.hide()
       }, 2000)
-    },
-
-    activateAlert () {
-      this.showAlert = true
-    },
-
-    hideAlert () {
-      this.showAlert = false
     }
   }
 }
