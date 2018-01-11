@@ -1,11 +1,5 @@
 <template>
   <div>
-    <div class="flex justify-center link-site" v-once>
-      <a href="https://espacokaya.com.br/">
-        <h5>Visite o nosso site</h5>
-      </a>
-    </div>
-
     <div class="card-wrapper flex justify-center">
       <q-card class="card-form">
         <h5 align="center">Esqueci a senha</h5>
@@ -194,11 +188,6 @@ export default {
 </script>
 
 <style scoped>
-.link-site {
-  padding-top: 30px;
-  text-decoration: underline;
-}
-
 .my-alert {
   margin-left: 448px;
   margin-right: 446px;
