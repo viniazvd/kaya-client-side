@@ -14,6 +14,7 @@ import HttpPlugin from './support/pluggins/http'
 import UserPlugin from './support/pluggins/user'
 import Loader from './support/pluggins/loader'
 
+// Defina false para previnir a exibição da dica sobre o modo de produção ao iniciar o Vue.
 Vue.config.productionTip = false
 
 // // registering core
