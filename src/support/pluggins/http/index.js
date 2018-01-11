@@ -6,7 +6,7 @@ const install = Vue => {
   if (instaled) return
 
   Object.defineProperties(Vue.prototype, {
-    $httpp: {
+    $http: {
       get () {
         return http
       }
