@@ -1,10 +1,10 @@
 const alertMethods = {
   methods: {
-    activateAlert () {
+    $activateAlert () {
       this.showAlert = true
     },
 
-    hideAlert () {
+    $hideAlert () {
       this.showAlert = false
     }
   }
