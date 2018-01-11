@@ -1,7 +1,13 @@
 import loaderFactory from './loaderFactory'
 import registerStore from './registerStore'
 
-export const Loader = (Vue, store) => {
+let instaled = false
+
+const install = (Vue, store) => {
+  if (instaled) {
+    return
+  }
+
   registerStore(store)
 
   Object.defineProperty(Vue.prototype, '$loader', {
@@ -9,4 +15,8 @@ export const Loader = (Vue, store) => {
       return loaderFactory(this)
     }
   })
+
+  instaled = true
 }
+
+export default { install }
