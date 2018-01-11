@@ -4,9 +4,7 @@ import registerStore from './registerStore'
 let instaled = false
 
 const install = (Vue, store) => {
-  if (instaled) {
-    return
-  }
+  if (instaled) return
 
   registerStore(store)
 
