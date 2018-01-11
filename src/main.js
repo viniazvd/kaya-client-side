@@ -7,7 +7,7 @@ import router from './router'
 import store from './store'
 // import { Http } from './support/pluggins/http'
 import UserPlugin from './support/pluggins/user'
-import { Loader } from './support/pluggins/loader'
+import Loader from './support/pluggins/loader'
 
 Vue.config.productionTip = false
 Vue.use(Quasar)
